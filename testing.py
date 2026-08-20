@@ -31,13 +31,13 @@ class StreetFighterWatch(StreetFighter):
         self.enemy_health = info.get("enemy_health", 0)
         return obs, info
 
-model_path = "./opt/sf_5m.zip"
+model_path = "./opt/checkpoints/sf_65m_v4_8700000_steps.zip"
 
 env = DummyVecEnv([StreetFighterWatch])
 env = VecFrameStack(env, n_stack=4, channels_order="last")
 model = PPO.load(model_path, env=env)
 
-speed = 4
+speed = 8
 
 obs = env.reset()
 frames = []
@@ -48,5 +48,5 @@ while True:
     if dones[0]:
         break
 env.close()
-imageio.mimsave("sf_5m_{}x.mp4".format(speed), frames, fps=30 * speed)
+imageio.mimsave("sf_65m_v4_8.7m{}x.mp4".format(speed), frames, fps=30 * speed)
 print("saved mp4")
